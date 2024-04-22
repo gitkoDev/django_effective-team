@@ -1,0 +1,13 @@
+<ul>
+    {% for request in requests %}
+    <li>Name: {{request.member}}</li>
+    <li>To team: {{request.team}}</li>
+    
+    <hr/>
+
+    {% empty %}
+    <li>no requests yet</li>
+    
+    {% endfor %}
+    
+</ul>

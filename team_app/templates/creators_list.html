@@ -1,0 +1,12 @@
+<ul>
+    {% for creator in creators %}
+    <li>Name: {{creator.name}}</li>
+    <li>Money: {{creator.money}}</li>
+    
+    <hr/>
+    {% empty %}
+    <li>no creators yet</li>
+    
+    {% endfor %}
+    
+</ul>

@@ -1,0 +1,13 @@
+<ul>
+{% for member in members %}
+<li>Name: {{member.name}}</li>
+<li>Stamina: {{member.stamina}}</li>
+<li>Team: {{member.team}}</li>
+
+<hr/>
+{% empty %}
+<li>no members yet</li>
+
+{% endfor %}
+
+</ul>
