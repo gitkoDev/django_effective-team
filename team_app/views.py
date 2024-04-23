@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views.generic import ListView
+from rest_framework import generics
+
 from .models import (
     Creator,
     Team,
@@ -8,35 +8,52 @@ from .models import (
     Request
 )
 
+from .serializers import (
+    CreatorSerializer,
+    TeamSerializer,
+    MemberSerializer,
+    RequestSerializer
+)
+
 # List views
-class CreatorList(ListView):
-    model = Creator
-    context_object_name = 'creators'
-    template_name = 'creators_list.html'
+class CreatorList(generics.ListCreateAPIView):
+    serializer_class = CreatorSerializer
+    queryset = Creator.objects.all()
     
-class TeamList(ListView):
-    model = Team
-    context_object_name = 'teams'
-    template_name = 'teams_list.html'    
-
-class MemberList(ListView):
-    model = Member
-    context_object_name = 'members'
-    template_name = 'members_list.html'
-     
-class RequestList(ListView):
-    model = Request
-    context_object_name = 'requests'
-    template_name = 'requests_list.html'
+class TeamList(generics.ListCreateAPIView):
+    serializer_class = TeamSerializer
+    queryset = Team.objects.all()
     
+class MemberList(generics.ListCreateAPIView):
+    serializer_class = MemberSerializer
+    queryset = Member.objects.all()
+    
+class RequestList(generics.ListCreateAPIView):
+    serializer_class = RequestSerializer
+    queryset = Request.objects.all()
 
 
+# Detail views 
+class CreatorListRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CreatorSerializer
+    queryset = Creator.objects.all()
+    lookup_field = 'pk'
+    
+class TeamListRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TeamSerializer
+    queryset = Team.objects.all()
+    lookup_field = 'pk'    
+
+class MemberListRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = MemberSerializer
+    queryset = Member.objects.all()
+    lookup_field = 'pk'    
+
+class RequestListRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = RequestSerializer
+    queryset = Request.objects.all()
+    lookup_field = 'pk'    
+ 
 def index(request):
     return HttpResponse('index page')
 
-
-
-# creator
-# team
-# member
-# request
