@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Creator(models.Model):
     creator_name = models.CharField(max_length=250)
-    money = models.FloatField(default=0.0)
+    money = models.FloatField(default=0)
     
     def __str__(self):
         return self.creator_name
@@ -31,3 +31,7 @@ class Request(models.Model):
         return f"{self.member.member_name}'s request to {self.team.team_name}"
 
 
+class Transaction(models.Model):
+    sender = models.ForeignKey(Creator, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(Creator, on_delete=models.CASCADE, related_name='receiver')
+    amount = models.FloatField(default=0)

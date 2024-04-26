@@ -3,7 +3,8 @@ from .models import (
     Creator,
     Team,
     Member,
-    Request
+    Request,
+    Transaction
 )
 
 class CreatorSerializer(serializers.ModelSerializer):
@@ -21,8 +22,12 @@ class MemberSerializer(serializers.ModelSerializer):
         model = Member
         fields = ('__all__')
         
-
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
+        fields = ('__all__')
+        
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
         fields = ('__all__')
