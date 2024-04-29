@@ -13,6 +13,7 @@ class Creator(models.Model):
 
 
 class Team(models.Model):
+    team_size = models.IntegerField(default=1)
     team_name = models.CharField(max_length=250)
     creator = models.ForeignKey(Creator, on_delete=models.CASCADE)
 

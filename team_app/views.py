@@ -1,32 +1,22 @@
-from django.http import HttpResponse
 from django.db import transaction
-from rest_framework import (
-    generics,
-    status,
-    serializers
-)
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.http import HttpResponse
 
-from .models import (
-    Creator,
-    Team,
-    Member,
-    Request,
-    Transaction
-)
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import Creator, Member, Request, Team, Transaction
 
 from .serializers import (
     CreatorSerializer,
-    TeamSerializer,
     MemberSerializer,
     RequestSerializer,
+    TeamSerializer,
     TransactionSerializer
 )
 
+
 # List views
-
-
 class CreatorListCreate(generics.ListCreateAPIView):
     serializer_class = CreatorSerializer
     queryset = Creator.objects.all()
@@ -41,10 +31,23 @@ class MemberListCreate(generics.ListCreateAPIView):
     serializer_class = MemberSerializer
     queryset = Member.objects.all()
 
+    def get(self, request):
+        members = Member.objects.all().order_by('stamina')
+        serializer = MemberSerializer(members, many=True)
+        return Response(
+            serializer.data, status=status.HTTP_200_OK
+        )
+
 
 class RequestListCreate(generics.ListCreateAPIView):
     serializer_class = RequestSerializer
     queryset = Request.objects.all()
+
+    def post(self, request):
+
+        return Response(
+            {'result': 'aaa'}, status=status.HTTP_200_OK
+        )
 
 
 # Detail views
@@ -98,7 +101,7 @@ class TransactionListCreate(APIView):
         # Get input
         sender_id = request.data['sender']
         receiver_id = request.data['receiver']
-        amount = request.data['amount']
+        amount = float(request.data['amount'])
 
         # Get creators
         try:

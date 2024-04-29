@@ -1,11 +1,6 @@
 from rest_framework import serializers
-from .models import (
-    Creator,
-    Team,
-    Member,
-    Request,
-    Transaction
-)
+
+from .models import Creator, Member, Request, Team, Transaction
 
 
 class CreatorSerializer(serializers.ModelSerializer):
