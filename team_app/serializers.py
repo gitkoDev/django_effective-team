@@ -9,19 +9,23 @@ class CreatorSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-class TeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Team
-        fields = ('__all__')
-
-
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = ('__all__')
 
 
+class TeamSerializer(serializers.ModelSerializer):
+    members = MemberSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Team
+        fields = ('__all__')
+
+
 class RequestSerializer(serializers.ModelSerializer):
+    member = MemberSerializer(read_only=True)
+
     class Meta:
         model = Request
         fields = ('__all__')
@@ -30,7 +34,7 @@ class RequestSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('__all__')
+        fields = ['sender', 'receiver', 'amount']
 
     def validate(self, data):
         if data['sender'] == data['receiver']:

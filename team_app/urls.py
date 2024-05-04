@@ -1,5 +1,7 @@
 from django.urls import path
 
+from . import views
+
 from .views import (
     CreatorListCreate,
     CreatorListRetrieveUpdateDestroy,
@@ -9,16 +11,18 @@ from .views import (
     RequestListRetrieveUpdateDestroy,
     TeamListCreate,
     TeamListRetrieveUpdateDestroy,
+    TeamRecruitCreate,
     TransactionListCreate,
-    index
+    # index
 )
 
 urlpatterns = [
-    path('', index),
+    # path('', index),
     path('creators/', CreatorListCreate.as_view()),
     path('creators/<int:pk>/', CreatorListRetrieveUpdateDestroy.as_view()),
     path('teams/', TeamListCreate.as_view()),
     path('teams/<int:pk>/', TeamListRetrieveUpdateDestroy.as_view()),
+    path('teams/recruit/<int:pk>', TeamRecruitCreate.as_view()),
     path('members/', MemberListCreate.as_view()),
     path('members/<int:pk>/', MemberListRetrieveUpdateDestroy.as_view()),
     path('requests/', RequestListCreate.as_view()),

@@ -8,14 +8,15 @@ class Creator(models.Model):
     money = models.FloatField(default=0)
 
     def __str__(self):
-        # return f'{self.id}'
         return self.creator_name
 
 
 class Team(models.Model):
-    team_size = models.IntegerField(default=1)
     team_name = models.CharField(max_length=250)
+    team_size = models.IntegerField(default=2)
     creator = models.ForeignKey(Creator, on_delete=models.CASCADE)
+    members = models.ManyToManyField(
+        'Member', related_name='members', blank=True)
 
     def __str__(self):
         return self.team_name
@@ -24,7 +25,6 @@ class Team(models.Model):
 class Member(models.Model):
     member_name = models.CharField(max_length=250)
     stamina = models.IntegerField(default=0)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.member_name
