@@ -21,5 +21,5 @@ urlpatterns = [
     path('teams/<int:pk>/recruit/', TeamRecruitListCreate.as_view()),
     path('members/', MemberListCreate.as_view()),
     path('members/<int:pk>/', MemberListRetrieveUpdateDestroy.as_view()),
-    path('transactions/', TransactionListCreate.as_view())
+    path('transactions/', TransactionListCreate.as_view()),
 ]

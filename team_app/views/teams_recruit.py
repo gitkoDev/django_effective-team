@@ -5,8 +5,11 @@ from rest_framework.response import Response
 
 from ..models import Team, Request
 
+from ..serializers import RequestSerializer
+
 
 class TeamRecruitListCreate(generics.CreateAPIView):
+    serializer_class = RequestSerializer
     lookup_field = 'pk'
 
     def sort_by_stamina(self, requests):

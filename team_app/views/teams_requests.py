@@ -1,10 +1,9 @@
-
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ..models import Team, Request, Member
-from ..serializers import RequestSerializer, RequestPostSerializzer
+from ..serializers import RequestSerializer
 
 
 class TeamRequestListCreate(APIView):
@@ -17,7 +16,7 @@ class TeamRequestListCreate(APIView):
 
         # Check if team exists
         try:
-            team = Team.objects.get(id=pk)
+            Team.objects.get(id=pk)
         except:
             return Response(
                 {"error": "team doesn't exist"}, status=status.HTTP_400_BAD_REQUEST
@@ -36,7 +35,7 @@ class TeamRequestListCreate(APIView):
 
     def post(self, request, pk):
         # Validate input
-        serializer = RequestPostSerializzer(data=request.data)
+        serializer = RequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         # Get input

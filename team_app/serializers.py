@@ -24,16 +24,6 @@ class TeamSerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
-    member = MemberSerializer(read_only=True)
-
-    class Meta:
-        model = Request
-        fields = ['member']
-
-
-class RequestPostSerializzer(serializers.ModelSerializer):
-    # member = MemberSerializer(read_only=True)
-
     class Meta:
         model = Request
         fields = ['member']
