@@ -35,7 +35,7 @@ class Request(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.member.member_name}'s request to {self.team.team_name}"
+        return f"{self.member.member_name}'s request"
 
 
 class Transaction(models.Model):

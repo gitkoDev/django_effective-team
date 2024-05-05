@@ -1,24 +1,47 @@
-from django.db.models import Prefetch
 
-from rest_framework import generics, status
+from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from ..models import Request, Member, Team
-from ..serializers import RequestSerializer
+from ..models import Team, Request, Member
+from ..serializers import RequestSerializer, RequestPostSerializzer
 
 
-class RequestListCreate(generics.ListCreateAPIView):
+class TeamRequestListCreate(APIView):
     serializer_class = RequestSerializer
     queryset = Request.objects.all()
 
-    def post(self, request):
+    def get(self, request, pk):
+        requests = Request.objects.filter(team=pk)
+        serializer = RequestSerializer(requests, many=True)
+
+        # Check if team exists
+        try:
+            team = Team.objects.get(id=pk)
+        except:
+            return Response(
+                {"error": "team doesn't exist"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Get requests to team
+        if not requests:
+            return Response(
+                {"error": "no requests yet"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def post(self, request, pk):
         # Validate input
-        serializer = RequestSerializer(data=request.data)
+        serializer = RequestPostSerializzer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         # Get input
         member_id = request.data['member']
-        team_id = request.data['team']
+        team_id = pk
 
         # Get member and team objects
         member = Member.objects.get(id=member_id)
@@ -38,13 +61,8 @@ class RequestListCreate(generics.ListCreateAPIView):
                     {'error:': f"{member.member_name} is already in team {team.team_name}"}, status=status.HTTP_400_BAD_REQUEST
                 )
 
-        serializer.save()
+        Request.objects.create(member=member, team=team)
+
         return Response(
             {'result': f"{member.member_name}'s request to team {team.team_name} added"}, status=status.HTTP_200_OK
         )
-
-
-class RequestListRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = RequestSerializer
-    queryset = Request.objects.all()
-    lookup_field = 'pk'

@@ -28,7 +28,15 @@ class RequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Request
-        fields = ('__all__')
+        fields = ['member']
+
+
+class RequestPostSerializzer(serializers.ModelSerializer):
+    # member = MemberSerializer(read_only=True)
+
+    class Meta:
+        model = Request
+        fields = ['member']
 
 
 class TransactionSerializer(serializers.ModelSerializer):
