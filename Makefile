@@ -11,3 +11,7 @@ reapply:
 	python manage.py migrate team_app zero
 	python manage.py makemigrations
 	python manage.py migrate
+
+up:
+	docker-compose build
+	docker-compose up
