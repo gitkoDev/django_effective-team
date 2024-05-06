@@ -12,6 +12,15 @@ reapply:
 	python manage.py makemigrations
 	python manage.py migrate
 
+initUp:
+	python manage.py makemigrations team_app
+	docker-compose build
+	docker-compose up -d
+	docker compose run web python manage.py migrate
+
 up:
 	docker-compose build
-	docker-compose up
+	docker-compose up -d
+
+down:
+	docker-compose down
