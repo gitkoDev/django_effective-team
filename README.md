@@ -11,6 +11,7 @@ Rest API с использованием `Django` и `Django Rest Framework`
 ## Endpoints
 
 #### CRUD операции
+
 - /api/***имя_сущности***/ &ensp; `=>`  &ensp; **POST** &ensp;  `=>` &ensp; Добавить сущность (`creator`/`team`/`member`/`request`)
 - /api/***имя_сущности***/ &ensp; `=>`  &ensp; **GET** &ensp;  `=>` &ensp; Получить все сущности (`creator`/`team`/`member`/`request`)
 - /api/***имя_сущности***/***id***/ &ensp; `=>`  &ensp; **GET** &ensp;  `=>` &ensp; Получить сущность по id (`creator`/`team`/`member`/`request`)
@@ -22,18 +23,26 @@ Rest API с использованием `Django` и `Django Rest Framework`
 - /api/***transactions***/ &ensp; `=>`  &ensp; **GET** &ensp;  `=>` &ensp; Получить все транзакции 
 - /api/***transactions***/ &ensp; `=>`  &ensp; **POST** &ensp;  `=>` &ensp; Осуществить транзакцию 
 
+#### Операции с запросами на вступленние в комманды
 
-## Формат данных для транзакций
+- /api/***teams***/***id***/request &ensp; `=>`  &ensp; **GET** &ensp;  `=>` &ensp; Получить все запросы в команду 
+- /api/***teams***/***id***/request &ensp; `=>`  &ensp; **POST** &ensp;  `=>` &ensp; Отправить запрос в команду
+- /api/***teams***/***id***/recruit &ensp; `=>`  &ensp; **POST** &ensp;  `=>` &ensp; Принять в команду участников (отбор по выносливости в случае ограниченного количества мест в групппе)
+
+## Swagger документация по доступным эндпоинтам
+- /api/schema/swagger-ui/ &ensp; `=>`  &ensp; **GET** &ensp; 
+- /api/schema/redoc/ &ensp; `=>`  &ensp; **GET** &ensp; 
+
+
+## Запуск
+
+Первоначальный запуск для установки всех небходимых зависимостей и миграций
+```
+make initUp
+```
+
+Повторный запуск
 
 ```
-{
-    "sender": 10,
-    "receiver": 3,
-    "amount": 8978
-}
+make up
 ```
-`sender` - id отправителя
-
-`receiver` - id получателя
-
-`amount` - сумма транзакции
