@@ -15,7 +15,8 @@ reapply:
 initUp:
 	docker compose build
 	docker compose up -d
-	docker compose run web python manage.py migrate
+	docker compose exec web python manage.py makemigrations team_app
+	docker compose exec web python manage.py migrate
 
 up:
 	docker compose build

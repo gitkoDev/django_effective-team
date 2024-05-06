@@ -8,7 +8,6 @@ ENV PYTHONDONTWRITEBYCODE=1
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 COPY . /app/
-RUN python manage.py makemigrations team_app
 
 
 
