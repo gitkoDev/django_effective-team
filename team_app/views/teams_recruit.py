@@ -1,15 +1,12 @@
 from django.db import transaction
-
 from rest_framework import generics, status
 from rest_framework.response import Response
-
 from ..models import Team, Request
-
-from ..serializers import RequestSerializer
+from ..serializers import RequestPostSerializer
 
 
 class TeamRecruitListCreate(generics.CreateAPIView):
-    serializer_class = RequestSerializer
+    serializer_class = RequestPostSerializer
     lookup_field = 'pk'
 
     def sort_by_stamina(self, requests):
@@ -33,7 +30,6 @@ class TeamRecruitListCreate(generics.CreateAPIView):
 
         # Get all requests to the team
         requests = Request.objects.filter(team=pk)
-
         if not requests:
             return Response({'error': f'no requests to {team.team_name}'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -47,7 +43,7 @@ class TeamRecruitListCreate(generics.CreateAPIView):
         if current_team_size >= team_limit:
             return Response({'error': f'{team.team_name} has no more space in the team'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # If not enough space in team for all new members, sort them by stamina
+        # If not enough space in team for all new members, sort them by stamina and add best ones
         if current_team_size + len(requests) > team_limit:
             sorted_requests = self.sort_by_stamina(requests)
 
