@@ -1,8 +1,8 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from ..models import Member
-from ..serializers import MemberSerializer
+from team_app.models import Member
+from team_app.serializers import MemberSerializer
 
 
 class MemberListCreate(generics.ListCreateAPIView):

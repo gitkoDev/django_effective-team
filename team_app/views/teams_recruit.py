@@ -2,25 +2,20 @@ from django.db import transaction
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from ..models import Team, Request
-from ..serializers import RequestPostSerializer
+from team_app.models import Team, Request
+from team_app.serializers import RequestPostSerializer
 
 
 class TeamRecruitListCreate(generics.CreateAPIView):
     serializer_class = RequestPostSerializer
     lookup_field = 'pk'
 
+    def get_stamina(self, request):
+        return request.member.stamina
+
     def sort_by_stamina(self, requests):
-        sorted = []
-        for request in requests:
-            sorted.append(request)
-
-        for i in range(0, len(sorted) - 1):
-            for j in range(i + 1, len(sorted)):
-                if sorted[j].member.stamina > sorted[i].member.stamina:
-                    sorted[i], sorted[j] = sorted[j], sorted[i]
-
-        return sorted
+        sorted_requests = sorted(requests, key=self.get_stamina, reverse=True)
+        return sorted_requests
 
     def post(self, request, pk):
         # Check if team with this pk exists

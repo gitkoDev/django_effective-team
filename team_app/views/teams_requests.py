@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Team, Request
-from ..serializers import RequestPostSerializer, RequestGetSerializer
+from team_app.models import Team, Request
+from team_app.serializers import RequestPostSerializer, RequestGetSerializer
 
 
 class TeamRequestListCreate(APIView):

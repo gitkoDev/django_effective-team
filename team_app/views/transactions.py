@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Transaction
-from ..serializers import TransactionSerializer
+from team_app.models import Transaction
+from team_app.serializers import TransactionSerializer
 
 
 class TransactionListCreate(APIView):
