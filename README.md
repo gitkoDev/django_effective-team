@@ -1,4 +1,4 @@
-# Effective team Django test task 
+# Effective team REST API
 Rest API с использованием `Django` и `Django Rest Framework`
 
 ## Сущности
